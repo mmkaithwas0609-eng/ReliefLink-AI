@@ -45,9 +45,10 @@ export function SmsAlertForm() {
     userId: user?.uid
   });
 
-  // ✅ TYPE SAFE CHECK
-  if ("sid" in response) {
-    setSubmitSuccess(`SMS sent successfully. SID: ${response.sid}`);
+  if (response && typeof response === "object" && "sid" in response) {
+  const successResponse = response as { sid: string };
+
+  setSubmitSuccess(`SMS sent successfully. SID: ${successResponse.sid}`);
 
     reset({
       to: "",
