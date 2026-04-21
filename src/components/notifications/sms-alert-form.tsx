@@ -45,8 +45,10 @@ export function SmsAlertForm() {
     userId: user?.uid
   });
 
-  if ("ok" in response && response.ok) {
-    setSubmitSuccess(`SMS sent successfully. SID: ${response.sid}`);
+  if ((response as any).ok) {
+  const successResponse = response as { ok: true; sid: string };
+
+  setSubmitSuccess(`SMS sent successfully. SID: ${successResponse.sid}`);
 
     reset({
       to: "",
