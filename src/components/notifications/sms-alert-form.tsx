@@ -50,12 +50,12 @@ export function SmsAlertForm() {
 
   setSubmitSuccess(`SMS sent successfully. SID: ${successResponse.sid}`);
 
-    reset({
-      to: "",
-      message:
-        "ReliefLink AI alert: A new urgent case needs attention. Please open the coordinator dashboard for details."
-    });
-  } else {
+  reset({
+    to: "",
+    message:
+      "ReliefLink AI alert: A new urgent case needs attention. Please open the coordinator dashboard for details."
+  });
+} else {
     throw new Error(
       "error" in response ? response.error : "Failed to send SMS"
     );
