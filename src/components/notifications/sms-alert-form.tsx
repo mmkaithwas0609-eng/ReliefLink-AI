@@ -40,10 +40,20 @@ export function SmsAlertForm() {
       setSubmitError(null);
       setSubmitSuccess(null);
       const response = await sendSmsAlertRequest({
-        ...parsed.data,
-        userId: user?.uid
-      });
-      setSubmitSuccess(`SMS sent successfully. SID: ${response.sid}`);
+  ...parsed.data,
+  userId: user?.uid
+});
+
+if ("sid" in response) {
+  setSubmitSuccess(`SMS sent successfully. SID: ${response.sid}`);
+  reset({
+    to: "",
+    message:
+      "ReliefLink AI alert: A new urgent case needs attention. Please open the coordinator dashboard for details."
+  });
+} else {
+  throw new Error(response.error || "Failed to send SMS");
+}
       reset({
         to: "",
         message:
