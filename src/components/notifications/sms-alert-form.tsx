@@ -45,10 +45,8 @@ export function SmsAlertForm() {
     userId: user?.uid
   });
 
-  if (response && typeof response === "object" && "sid" in response) {
-  const successResponse = response as { sid: string };
-
-  setSubmitSuccess(`SMS sent successfully. SID: ${successResponse.sid}`);
+  if ("ok" in response && response.ok) {
+    setSubmitSuccess(`SMS sent successfully. SID: ${response.sid}`);
 
     reset({
       to: "",
@@ -56,7 +54,9 @@ export function SmsAlertForm() {
         "ReliefLink AI alert: A new urgent case needs attention. Please open the coordinator dashboard for details."
     });
   } else {
-    throw new Error(response.error || "Failed to send SMS");
+    throw new Error(
+      "error" in response ? response.error : "Failed to send SMS"
+    );
   }
 
 } catch (error) {
