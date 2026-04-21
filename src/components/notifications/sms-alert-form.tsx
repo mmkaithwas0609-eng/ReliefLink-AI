@@ -37,33 +37,32 @@ export function SmsAlertForm() {
     }
 
     try {
-      setSubmitError(null);
-      setSubmitSuccess(null);
-      const response = await sendSmsAlertRequest({
-  ...parsed.data,
-  userId: user?.uid
-});
+  setSubmitError(null);
+  setSubmitSuccess(null);
 
-if ("sid" in response) {
-  setSubmitSuccess(`SMS sent successfully. SID: ${response.sid}`);
-  reset({
-    to: "",
-    message:
-      "ReliefLink AI alert: A new urgent case needs attention. Please open the coordinator dashboard for details."
+  const response = await sendSmsAlertRequest({
+    ...parsed.data,
+    userId: user?.uid
   });
-} else {
-  throw new Error(response.error || "Failed to send SMS");
+
+  // ✅ TYPE SAFE CHECK
+  if ("sid" in response) {
+    setSubmitSuccess(`SMS sent successfully. SID: ${response.sid}`);
+
+    reset({
+      to: "",
+      message:
+        "ReliefLink AI alert: A new urgent case needs attention. Please open the coordinator dashboard for details."
+    });
+  } else {
+    throw new Error(response.error || "Failed to send SMS");
+  }
+
+} catch (error) {
+  setSubmitError(
+    error instanceof Error ? error.message : "Failed to send SMS alert."
+  );
 }
-      reset({
-        to: "",
-        message:
-          "ReliefLink AI alert: A new urgent case needs attention. Please open the coordinator dashboard for details."
-      });
-    } catch (error) {
-      setSubmitError(
-        error instanceof Error ? error.message : "Failed to send SMS alert."
-      );
-    }
   }
 
   return (
