@@ -1,5 +1,7 @@
 import en from "@/messages/en";
 import hi from "@/messages/hi";
+import { TranslationMessages } from "./types";
+
 
 export const locales = ["en", "hi"] as const;
 
@@ -7,10 +9,11 @@ export type AppLocale = (typeof locales)[number];
 
 export const defaultLocale: AppLocale = "en";
 
-export const messages = {
+
+export const messages: Record<AppLocale, TranslationMessages> = {
   en,
-  hi
-} as const;
+  hi  
+};
 
 export const languageNameToLocale: Record<string, AppLocale> = {
   English: "en",

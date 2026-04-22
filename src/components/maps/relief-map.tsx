@@ -179,7 +179,7 @@ export function ReliefMap({ dataset }: ReliefMapProps) {
 
   if (!clientEnv.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY) {
     return (
-      <div className="rounded-3xl border border-amber-200 bg-amber-50 px-5 py-5 text-sm text-amber-800">
+      <div className="rounded-3xl border border-amber-200 bg-amber-50 px-5 py-5 text-sm text-amber-800 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-200">
         Add `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY` to enable live map rendering.
       </div>
     );
@@ -187,7 +187,7 @@ export function ReliefMap({ dataset }: ReliefMapProps) {
 
   if (mapError) {
     return (
-      <div className="rounded-3xl border border-red-200 bg-red-50 px-5 py-5 text-sm text-red-700">
+      <div className="rounded-3xl border border-red-200 bg-red-50 px-5 py-5 text-sm text-red-700 dark:border-red-500/30 dark:bg-red-500/10 dark:text-red-300">
         {mapError}
       </div>
     );

@@ -1,4 +1,4 @@
-import type { Timestamp } from "firebase/firestore";
+import { Timestamp, FieldValue } from "firebase/firestore";
 
 import type { GeoPoint, NeedPriority, UserRole } from "@/types";
 
@@ -36,8 +36,8 @@ export type NeedRecord = {
   requesterPhone: string;
   createdBy: string;
   assignedVolunteerIds: string[];
-  createdAt: Timestamp | null;
-  updatedAt: Timestamp | null;
+  createdAt: Timestamp | FieldValue | null;
+updatedAt: Timestamp | FieldValue | null;
 };
 
 export type VolunteerRecord = {
@@ -52,8 +52,8 @@ export type VolunteerRecord = {
   maxTravelDistanceKm: number;
   location: GeoPoint;
   address: string;
-  createdAt: Timestamp | null;
-  updatedAt: Timestamp | null;
+  createdAt: Timestamp | FieldValue | null;
+updatedAt: Timestamp | FieldValue | null;
 };
 
 export type UserProfile = {
@@ -63,8 +63,8 @@ export type UserProfile = {
   phoneNumber: string;
   role: UserRole;
   preferredLanguage: string;
-  createdAt: Timestamp | null;
-  updatedAt: Timestamp | null;
+  createdAt: Timestamp | FieldValue | null;
+updatedAt: Timestamp | FieldValue | null;
 };
 
 export type AssignmentRecord = {
@@ -75,8 +75,8 @@ export type AssignmentRecord = {
   distanceKm: number;
   score: number;
   matchReasons: string[];
-  createdAt: Timestamp | null;
-  updatedAt: Timestamp | null;
+  createdAt: Timestamp | FieldValue | null;
+updatedAt: Timestamp | FieldValue | null;
 };
 
 export type NotificationRecord = {
@@ -87,6 +87,6 @@ export type NotificationRecord = {
   to?: string;
   message: string;
   status: "queued" | "sent" | "failed";
-  createdAt: Timestamp | null;
-  updatedAt: Timestamp | null;
+  createdAt: Timestamp | FieldValue | null;
+updatedAt: Timestamp | FieldValue | null;
 };

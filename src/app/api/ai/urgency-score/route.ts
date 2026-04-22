@@ -14,6 +14,7 @@ export async function POST(request: Request) {
     if (!hasGeminiConfig()) {
       const fallback = computeUrgency(input);
       return NextResponse.json({
+        ok: true,
         ...fallback,
         recommendedSkills: input.requiredSkills,
         scoringSource: "heuristic"
@@ -24,16 +25,20 @@ export async function POST(request: Request) {
     const parsed = geminiUrgencySchema.parse(result);
 
     return NextResponse.json({
+      ok: true,
       ...parsed,
       scoringSource: "gemini"
     });
   } catch (error) {
     if (error instanceof Error) {
-      return NextResponse.json({ error: error.message }, { status: 400 });
+      return NextResponse.json(
+        { ok: false, error: error.message },
+        { status: 400 }
+      );
     }
 
     return NextResponse.json(
-      { error: "Unable to score need urgency." },
+      { ok: false, error: "Unable to score need urgency." },
       { status: 500 }
     );
   }

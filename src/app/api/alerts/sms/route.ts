@@ -15,6 +15,7 @@ export async function POST(request: Request) {
     if (!hasTwilioConfig()) {
       return NextResponse.json(
         {
+          ok: false,
           error:
             "Twilio is not configured. Add TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, and TWILIO_PHONE_NUMBER."
         },
@@ -45,11 +46,14 @@ export async function POST(request: Request) {
     });
   } catch (error) {
     if (error instanceof Error) {
-      return NextResponse.json({ error: error.message }, { status: 400 });
+      return NextResponse.json(
+        { ok: false, error: error.message },
+        { status: 400 }
+      );
     }
 
     return NextResponse.json(
-      { error: "Unable to send SMS alert." },
+      { ok: false, error: "Unable to send SMS alert." },
       { status: 500 }
     );
   }

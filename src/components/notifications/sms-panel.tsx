@@ -4,7 +4,9 @@ import { useEffect, useState } from "react";
 import { BellRing, MessageSquareWarning, Smartphone } from "lucide-react";
 
 import { SmsAlertForm } from "@/components/notifications/sms-alert-form";
-
+type TwilioResponse =
+  | { ok: true; twilioConfigured: boolean }
+  | { ok: false; error: string };
 export function SmsPanel() {
   const [twilioConfigured, setTwilioConfigured] = useState<boolean | null>(null);
   const [configError, setConfigError] = useState<string | null>(null);
@@ -17,15 +19,13 @@ export function SmsPanel() {
           cache: "no-store"
         });
 
-        const data = (await response.json()) as
-          | { twilioConfigured: boolean }
-          | { error?: string };
+        const data = (await response.json()) as TwilioResponse;
 
-        if (!response.ok) {
-          throw new Error(data.error ?? "Unable to check Twilio configuration.");
-        }
+        if (!data.ok) {
+  throw new Error(data.error);
+}
 
-        setTwilioConfigured(data.twilioConfigured);
+setTwilioConfigured(data.twilioConfigured);
       } catch (error) {
         setConfigError(
           error instanceof Error

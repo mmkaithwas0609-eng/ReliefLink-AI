@@ -40,7 +40,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   useEffect(() => {
     let active = true;
 
-    let unsubscribe = () => undefined;
+    let unsubscribe: () => void = () => {};
 
     try {
       unsubscribe = subscribeToAuthChanges(async (nextUser) => {
